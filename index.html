@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Story Builder - Year 5/6 Guided Edition</title>
+  <style>
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f1f5f9; color: #0f172a; margin: 0; padding: 0; }
+    
+    header { background-color: #1e1b4b; color: white; padding: 16px; text-align: center; }
+    header h1 { margin: 0; font-size: 20px; letter-spacing: 1px; }
+    
+    /* Navigation Bar */
+    nav { display: flex; background-color: white; border-bottom: 2px solid #e2e8f0; overflow-x: auto; }
+    .nav-btn { flex: 1; min-width: 130px; padding: 12px 8px; border: none; background: none; font-weight: bold; color: #64748b; border-bottom: 4px solid transparent; cursor: pointer; text-align: center; font-size: 13px; }
+    .nav-btn.active { color: #4338ca; border-bottom-color: #4338ca; background-color: #eef2ff; }
+
+    /* Main Container & Panels */
+    .container { max-width: 850px; margin: 24px auto; padding: 0 16px; }
+    .panel { background: white; padding: 24px; border-radius: 8px; border: 1px solid #cbd5e1; display: none; }
+    .panel.active { display: block; }
+
+    h2 { margin-top: 0; color: #1e293b; font-size: 18px; }
+    p.sub { font-size: 14px; color: #475569; margin-bottom: 20px; background-color: #f1f5f9; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #4338ca; }
+
+    /* Layout Cards & Inputs */
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .card { padding: 16px; border-radius: 6px; border-left: 4px solid; margin-bottom: 16px; }
+    .card.header-card { background-color: #eef2ff; border-left-color: #4338ca; border-top: 1px solid #c7d2fe; border-right: 1px solid #c7d2fe; border-bottom: 1px solid #c7d2fe; }
+    .card.blue { background-color: #eff6ff; border-left-color: #2563eb; }
+    .card.teal { background-color: #f0fdf4; border-left-color: #0d9488; }
+    .card.red { background-color: #fef2f2; border-left-color: #dc2626; }
+    .card.purple { background-color: #faf5ff; border-left-color: #9333ea; }
+    .card.amber { background-color: #fffbeb; border-left-color: #d97706; }
+    
+    label { display: block; font-weight: bold; font-size: 12px; margin-bottom: 6px; text-transform: uppercase; color: #334155; }
+    input, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 10px; font-size: 14px; }
+    textarea { resize: vertical; }
+
+    /* Planning Banner */
+    .plan-banner { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; color: #334155; }
+    .plan-banner strong { color: #4338ca; }
+
+    /* Micro-Scaffolding Cards */
+    .chunk-card { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 14px; border-radius: 6px; margin-bottom: 16px; }
+    .chunk-label { font-weight: bold; font-size: 14px; color: #1e293b; margin-bottom: 4px; }
+    .chunk-tip { font-size: 12px; color: #475569; margin-bottom: 10px; line-height: 1.4; }
+
+    /* Helper Badges */
+    .badge { display: inline-block; background-color: #e0e7ff; color: #3730a3; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-bottom: 6px; }
+    .badge.green { background-color: #dcfce7; color: #166534; }
+    .badge.orange { background-color: #ffedd5; color: #9a3412; }
+
+    /* Action Buttons */
+    .btn-next { background-color: #4338ca; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; float: right; }
+    .btn-export { background-color: #2563eb; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-right: 10px; }
+    .btn-print { background-color: #059669; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+
+    /* Multi-Page Printable Storybook */
+    .book-page { background: white; border: 2px solid #0f172a; padding: 32px; height: 950px; margin-bottom: 32px; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    .draw-zone { height: 380px; width: 100%; border: 1.5px solid #000000; background-color: transparent; margin-bottom: 24px; }
+    .text-zone { flex-grow: 1; font-family: Georgia, serif; line-height: 1.5; font-size: 14px; color: #1e293b; }
+    .page-number { text-align: right; font-family: monospace; font-size: 12px; color: #94a3b8; margin-top: 12px; border-top: 1px solid #e2e8f0; padding-top: 8px; }
+
+    @media print {
+      body { background: white; }
+      header, nav, .no-print { display: none !important; }
+      .container { max-width: 100%; margin: 0; padding: 0; }
+      .panel { border: none; padding: 0; }
+      .book-page { border: none; height: 100vh; margin-bottom: 0; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>STORY ARCHITECT LAB (YEAR 5/6)</h1>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <button class="nav-btn active" id="tab0" onclick="showStage(0)">1. Plan Your Cast</button>
+    <button class="nav-btn" id="tab1" onclick="showStage(1)">2. Paint the Setting</button>
+    <button class="nav-btn" id="tab2" onclick="showStage(2)">3. Build the Danger</button>
+    <button class="nav-btn" id="tab3" onclick="showStage(3)">4. Write the Showdown</button>
+    <button class="nav-btn" id="tab4" onclick="showStage(4)">5. Right After Victory</button>
+    <button class="nav-btn" id="tab5" onclick="showStage(5)">6. Publish Storybook</button>
+  </nav>
+
+  <div class="container">
+
+    <!-- STAGE 0: PLANNING & OUTLINING -->
+    <div class="panel active" id="stage0">
+      <h2>Stage 1: Plan Your Characters, World & Plot</h2>
+      <p class="sub"><strong>Goal for this part:</strong> Map out who is in your story, where it takes place, and what happens in each chapter before you write.</p>
+
+      <div class="card header-card">
+        <div class="grid-2" style="margin-bottom: 0;">
+          <div>
+            <label style="color: #3730a3;">Author / Student Name</label>
+            <input type="text" id="studentName" placeholder="Enter your full name...">
+          </div>
+          <div>
+            <label style="color: #3730a3;">Story Title</label>
+            <input type="text" id="storyTitle" placeholder="Enter your story title...">
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card blue">
+          <label>Protagonist (Hero)</label>
+          <input type="text" id="planHero" placeholder="Hero's name...">
+          <input type="text" id="planHeroTrait" placeholder="Character traits & main goal...">
+        </div>
+        <div class="card teal">
+          <label>Companion / Sidekick</label>
+          <input type="text" id="planAlly" placeholder="Companion's name...">
+          <input type="text" id="planAllyRole" placeholder="Special skill or role in the journey...">
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card red">
+          <label>Antagonist (Rival)</label>
+          <input type="text" id="planRival" placeholder="Rival's name...">
+          <input type="text" id="planRivalMotive" placeholder="Why are they opposing your hero?">
+        </div>
+        <div class="card amber">
+          <label>Background Characters / World</label>
+          <input type="text" id="planExtras" placeholder="Who else is watching or affected? (guards, villagers, animals)">
+        </div>
+      </div>
+
+      <div class="card purple">
+        <label>Setting Breakdown</label>
+        <div class="grid-3">
+          <div>
+            <label style="font-size: 10px;">Time</label>
+            <input type="text" id="planTime" placeholder="e.g. Midnight, distant future">
+          </div>
+          <div>
+            <label style="font-size: 10px;">Place</label>
+            <input type="text" id="planPlace" placeholder="e.g. Abandoned fortress, jungle">
+          </div>
+          <div>
+            <label style="font-size: 10px;">Environment</label>
+            <input type="text" id="planEnv" placeholder="e.g. Howling wind, thick fog">
+          </div>
+        </div>
+      </div>
+
+      <div class="card amber">
+        <label>4-Beat Plot Map Outline</label>
+        <input type="text" id="planBeat1" placeholder="Chapter 1 Idea: Hero & companion arrive at the setting...">
+        <input type="text" id="planBeat2" placeholder="Chapter 2 Idea: What threat or trap surprises them?">
+        <input type="text" id="planBeat3" placeholder="Chapter 3 Idea: How do they fight back or solve the problem?">
+        <input type="text" id="planBeat4" placeholder="Chapter 4 Idea: How does the world change after they win?">
+      </div>
+
+      <button class="btn-next" onclick="showStage(1)">Move to Stage 2: Paint the Setting &rarr;</button>
+      <div style="clear:both;"></div>
+    </div>
+
+    <!-- STAGE 1: SETTING & HERO -->
+    <div class="panel" id="stage1">
+      <h2>Stage 2: Paint the Setting & Introduce Your Team</h2>
+      <p class="sub"><strong>Goal for this part:</strong> Create a vivid picture of the location and introduce your hero and companion working together. Use a <strong>Simile</strong> or <strong>Personification</strong> to make the environment come alive!</p>
+      
+      <div class="plan-banner" id="banner1"></div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk A: Paint the Atmosphere (3 Senses)</div>
+        <span class="badge green">TRY A SIMILE: "like a..." or "as... as a..."</span>
+        <span class="badge orange">TRY PERSONIFICATION: Give weather human actions</span>
+        <div class="chunk-tip">Describe what your characters <strong>see, hear, and feel</strong>. Try describing the location or weather using a simile or personification.</div>
+        <textarea id="p1a" rows="3" placeholder="Describe the weather and scenery..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk B: Show Your Team Interacting (with Dialogue)</div>
+        <span class="badge">TOOL: Dialogue ("...") + Character Actions</span>
+        <div class="chunk-tip">Show your hero and companion working together. Describe their movements and give them spoken dialogue.</div>
+        <textarea id="p1b" rows="3" placeholder="Write dialogue and actions between your hero and companion..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk C: Show the Reaction of Other Characters</div>
+        <span class="badge">TOOL: Show, Don't Tell</span>
+        <div class="chunk-tip">Show how nearby background characters (villagers, guards, animals) react to the scene.</div>
+        <textarea id="p1c" rows="3" placeholder="Describe how others around them are reacting..."></textarea>
+      </div>
+
+      <button class="btn-next" onclick="showStage(2)">Move to Stage 3: Build the Danger &rarr;</button>
+      <div style="clear:both;"></div>
+    </div>
+
+    <!-- STAGE 2: BUILDING DANGER -->
+    <div class="panel" id="stage2">
+      <h2>Stage 3: Build the Danger & Trigger the Trap</h2>
+      <p class="sub"><strong>Goal for this part:</strong> Build suspense before the big problem hits! Use <strong>Onomatopoeia (sound words)</strong> and show how your hero's body reacts to fear.</p>
+      
+      <div class="plan-banner" id="banner2"></div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk A: The Warning Sign (Build Suspense)</div>
+        <span class="badge green">TRY ONOMATOPOEIA: CRACK!, RUMBLE!, SNAP!</span>
+        <div class="chunk-tip">Describe something changing before the danger appears. Is it a strange noise, lights flickering, or a sudden cold wind?</div>
+        <textarea id="p2a" rows="3" placeholder="Describe the warning noise or sudden change..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk B: The Trap or Threat Hits</div>
+        <span class="badge">TOOL: Compound Sentence (, but / , so)</span>
+        <div class="chunk-tip">How does the villain strike, or how does the trap slam shut? Show how your team is caught off guard.</div>
+        <textarea id="p2b" rows="3" placeholder="Describe how the trap or bad guy surprises them..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk C: Body Language (Show Fear)</div>
+        <span class="badge orange">TRY A METAPHOR: "His heart was a pounding drum..."</span>
+        <div class="chunk-tip">Show how scared your hero is without using the word 'scared'. What happens to their heart, breath, or hands?</div>
+        <textarea id="p2c" rows="3" placeholder="Describe how your hero's body reacts to the danger..."></textarea>
+      </div>
+
+      <button class="btn-next" onclick="showStage(3)">Move to Stage 4: Write the Showdown &rarr;</button>
+      <div style="clear:both;"></div>
+    </div>
+
+    <!-- STAGE 3: THE CLIMAX -->
+    <div class="panel" id="stage3">
+      <h2>Stage 4: Write the Final Showdown & Action Climax</h2>
+      <p class="sub"><strong>Goal for this part:</strong> Write an intense fight or standoff between your hero, companion, and rival. Use <strong>Hyperbole (exaggeration)</strong> and vivid action verbs to power the scene!</p>
+
+      <div class="plan-banner" id="banner3"></div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk A: The Verbal Standoff & Dialogue</div>
+        <span class="badge">TOOL: Powerful Dialogue & Tagged Speech</span>
+        <div class="chunk-tip">Write spoken dialogue exchanged between the hero and antagonist before the action strikes.</div>
+        <textarea id="p3a" rows="3" placeholder="Write what the villain and hero shout at each other..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk B: Describe the High-Energy Action</div>
+        <span class="badge green">TRY HYPERBOLE: Exaggerate the power or scale</span>
+        <div class="chunk-tip">Describe micro-actions in dramatic detail. Use strong action verbs and hyperbole to emphasize power.</div>
+        <textarea id="p3b" rows="3" placeholder="Describe the big clash, powers, or physical struggle..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk C: Show the Teamwork Turning Point</div>
+        <span class="badge orange">TRY A SIMILE: Describe the turning moment using a comparison</span>
+        <div class="chunk-tip">How do the hero and companion combine their skills to turn the tide and defeat the challenge?</div>
+        <textarea id="p3c" rows="3" placeholder="Describe the clever idea or move that wins the battle..."></textarea>
+      </div>
+
+      <button class="btn-next" onclick="showStage(4)">Move to Stage 5: Right After Victory &rarr;</button>
+      <div style="clear:both;"></div>
+    </div>
+
+    <!-- STAGE 4: RIGHT AFTER VICTORY -->
+    <div class="panel" id="stage4">
+      <h2>Stage 5: Show What Happens Right After the Victory</h2>
+      <p class="sub"><strong>Goal for this part:</strong> Describe the quiet moment after the battle, show how the scenery turns from scary to safe, and bring your characters together to celebrate!</p>
+
+      <div class="plan-banner" id="banner4"></div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk A: The Scene Changes from Scary to Safe</div>
+        <span class="badge green">TRY A METAPHOR: "The sky became a..."</span>
+        <div class="chunk-tip">Describe how the weather, sky, or room changes right after the villain is defeated. Use warm, peaceful words.</div>
+        <textarea id="p4a" rows="3" placeholder="Describe how the environment heals or returns to normal..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk B: The Characters Celebrate Together</div>
+        <span class="badge">TOOL: Group Dialogue & Relief Actions</span>
+        <div class="chunk-tip">Show the hero, companion, and background characters sharing a sigh of relief, high-fiving, or speaking to each other.</div>
+        <textarea id="p4b" rows="3" placeholder="Write dialogue between the characters celebrating their victory..."></textarea>
+      </div>
+
+      <div class="chunk-card">
+        <div class="chunk-label">Chunk C: Write a Reflective Closing Sentence</div>
+        <span class="badge orange">TOOL: Complex Sentence (Although...)</span>
+        <div class="chunk-tip">How has your hero grown or changed? End with a strong final thought about their future.</div>
+        <textarea id="p4c" rows="3" placeholder="Write your final concluding sentence..."></textarea>
+      </div>
+
+      <button class="btn-next" onclick="showStage(5)">Move to Stage 6: Publish Storybook &rarr;</button>
+      <div style="clear:both;"></div>
+    </div>
+
+    <!-- STAGE 5: BOOK STUDIO -->
+    <div class="panel" id="stage5">
+      <h2>Stage 6: Preview & Publish Your Completed Storybook</h2>
+      <p class="sub"><strong>Goal for this part:</strong> Review your four-chapter illustrated storybook. Send it directly to Google Docs to share with your teacher!</p>
+
+      <div class="no-print" style="margin-bottom: 20px;">
+        <button class="btn-export" onclick="exportToGoogleDocs()">Open in Google Docs</button>
+        <button class="btn-print" onclick="window.print()">Print / Save PDF</button>
+      </div>
+
+      <!-- Multi-Page Output Container -->
+      <div id="bookContainer"></div>
+    </div>
+
+  </div>
+
+  <script>
+    function showStage(stageNum) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+
+      document.getElementById('stage' + stageNum).classList.add('active');
+      document.getElementById('tab' + stageNum).classList.add('active');
+
+      updateBanners();
+
+      if (stageNum === 5) {
+        buildMultiPageBook();
+      }
+    }
+
+    function updateBanners() {
+      const hero = document.getElementById('planHero').value || 'Hero';
+      const ally = document.getElementById('planAlly').value || 'Companion';
+      const place = document.getElementById('planPlace').value || 'Place';
+      
+      const b1 = document.getElementById('planBeat1').value || 'Not outlined yet';
+      const b2 = document.getElementById('planBeat2').value || 'Not outlined yet';
+      const b3 = document.getElementById('planBeat3').value || 'Not outlined yet';
+      const b4 = document.getElementById('planBeat4').value || 'Not outlined yet';
+
+      document.getElementById('banner1').innerHTML = `<strong>Planning Note:</strong> Focus on <em>${hero}</em> and <em>${ally}</em> in <em>${place}</em>. Outline: ${b1}`;
+      document.getElementById('banner2').innerHTML = `<strong>Planning Note:</strong> Danger outline: ${b2}`;
+      document.getElementById('banner3').innerHTML = `<strong>Planning Note:</strong> Showdown outline: ${b3}`;
+      document.getElementById('banner4').innerHTML = `<strong>Planning Note:</strong> Resolution outline: ${b4}`;
+    }
+
+    /* Multi-Page HTML Renderer */
+    function buildMultiPageBook() {
+      const student = document.getElementById('studentName').value.trim() || 'Student Author';
+      const title = document.getElementById('storyTitle').value.trim() || 'Untitled Story';
+      const container = document.getElementById('bookContainer');
+      container.innerHTML = '';
+
+      const chapters = [
+        { title: 'CHAPTER 1: THE SETTING & COMPANIONS', text: getChapterText('p1a', 'p1b', 'p1c') },
+        { title: 'CHAPTER 2: BUILDING THE DANGER', text: getChapterText('p2a', 'p2b', 'p2c') },
+        { title: 'CHAPTER 3: THE SHOWDOWN', text: getChapterText('p3a', 'p3b', 'p3c') },
+        { title: 'CHAPTER 4: RIGHT AFTER VICTORY', text: getChapterText('p4a', 'p4b', 'p4c') }
+      ];
+
+      chapters.forEach((ch, idx) => {
+        const page = document.createElement('div');
+        page.className = 'book-page';
+        page.innerHTML = `
+          <div class="draw-zone"></div>
+          <div class="text-zone">
+            <h3 style="margin-top:0; border-bottom: 2px solid #0f172a; padding-bottom: 6px; color: #1e1b4b; font-size: 16px; margin-bottom: 12px;">${ch.title}</h3>
+            <p style="white-space: pre-line; margin: 0;">${ch.text || '<em>[This chapter has not been written yet.]</em>'}</p>
+          </div>
+          <div class="page-number">"${title}" by ${student} &bull; Page ${idx + 1}</div>
+        `;
+        container.appendChild(page);
+      });
+    }
+
+    function getChapterText(idA, idB, idC) {
+      const a = document.getElementById(idA).value.trim();
+      const b = document.getElementById(idB).value.trim();
+      const c = document.getElementById(idC).value.trim();
+      return [a, b, c].filter(t => t.length > 0).join('\n\n');
+    }
+
+    /* Native Google Docs Clipboard Exporter - Strict Full-Width Table Layout */
+    function exportToGoogleDocs() {
+      const student = document.getElementById('studentName').value.trim() || 'Student';
+      const title = document.getElementById('storyTitle').value.trim() || 'Story';
+
+      const chapters = [
+        { title: 'CHAPTER 1: THE SETTING & COMPANIONS', text: getChapterText('p1a', 'p1b', 'p1c') },
+        { title: 'CHAPTER 2: BUILDING THE DANGER', text: getChapterText('p2a', 'p2b', 'p2c') },
+        { title: 'CHAPTER 3: THE SHOWDOWN', text: getChapterText('p3a', 'p3b', 'p3c') },
+        { title: 'CHAPTER 4: RIGHT AFTER VICTORY', text: getChapterText('p4a', 'p4b', 'p4c') }
+      ];
+
+      let formattedHtml = `
+        <div style="font-family: Arial, sans-serif; color: #1e293b; width: 100%; max-width: 100%;">
+          <h1 style="text-align: center; color: #1e1b4b; font-size: 22pt; margin-top: 0; margin-bottom: 4pt;">${title}</h1>
+          <div style="text-align: center; color: #4338ca; font-size: 13pt; font-weight: bold; margin-bottom: 24pt;">By: ${student}</div>
+      `;
+
+      chapters.forEach((ch, idx) => {
+        if (idx > 0) {
+          formattedHtml += `<br style="page-break-before: always; clear: both;" />`;
+        }
+
+        formattedHtml += `
+          <div style="width: 100%; display: block; margin-bottom: 24pt;">
+            <table width="100%" border="1" cellspacing="0" cellpadding="0" style="width: 100% !important; max-width: 100% !important; border-collapse: collapse; border: 1.5pt solid #000000; table-layout: fixed; margin-top: 0; margin-bottom: 24pt;">
+              <tr>
+                <td width="100%" style="width: 100% !important; border: 1.5pt solid #000000; vertical-align: top; background-color: #ffffff; padding: 0;">
+                  <p style="font-size: 180pt; line-height: 180pt; margin: 0; padding: 0; width: 100%;">&nbsp;</p>
+                </td>
+              </tr>
+            </table>
+            
+            <h2 style="color: #4338ca; border-bottom: 2px solid #4338ca; padding-bottom: 4pt; font-size: 14pt; margin-top: 20pt; margin-bottom: 12pt; page-break-after: avoid;">${ch.title}</h2>
+            <div style="font-family: Georgia, serif; white-space: pre-line; line-height: 1.5; font-size: 11pt; margin-bottom: 16pt;">${ch.text || '[ This chapter was left blank ]'}</div>
+            <div style="text-align: right; font-size: 9pt; color: #94a3b8; border-top: 1px solid #cbd5e1; padding-top: 6pt; margin-top: 24pt;">"${title}" by ${student} • Page ${idx + 1}</div>
+          </div>
+        `;
+      });
+
+      formattedHtml += `</div>`;
+
+      const listener = function(e) {
+        e.clipboardData.setData('text/html', formattedHtml);
+        e.clipboardData.setData('text/plain', `${title}\nBy: ${student}`);
+        e.preventDefault();
+      };
+      document.addEventListener('copy', listener);
+      document.execCommand('copy');
+      document.removeEventListener('copy', listener);
+
+      alert('Your story is ready!\n\nA blank Google Doc is opening now. Press Ctrl+V to paste your story!');
+      window.open('https://docs.new', '_blank');
+    }
+
+    updateBanners();
+  </script>
+</body>
+</html>
