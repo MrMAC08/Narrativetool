@@ -13,7 +13,7 @@
 
     /* Top Utility Bar for Saving & Controls */
     .save-bar { background-color: #0f172a; color: white; padding: 8px 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
-    .save-status { color: #4ade80; font-weight: bold; display: flex; align-items: center; gap: 6px; }
+    .save-status { color: #94a3b8; font-weight: bold; display: flex; align-items: center; gap: 6px; }
     .save-tools { display: flex; gap: 8px; align-items: center; }
     .btn-tool { background: #334155; color: #f8fafc; border: 1px solid #475569; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
     .btn-tool:hover { background: #475569; }
@@ -90,11 +90,11 @@
 
   <!-- Auto-Save Status & Control Bar -->
   <div class="save-bar">
-    <div class="save-status" id="saveIndicator">✓ Auto-saved to browser</div>
+    <div class="save-status" id="saveIndicator">● Ready (Type to start auto-saving)</div>
     <div class="save-tools">
       <button class="btn-tool" onclick="downloadBackup()">Download Backup</button>
       <button class="btn-tool" onclick="document.getElementById('fileInput').click()">Load Backup</button>
-      <button class="btn-tool btn-danger" onclick="clearAllData()">Reset Work</button>
+      <button class="btn-tool btn-danger" onclick="clearAllData()">Clear All Text</button>
       <input type="file" id="fileInput" style="display:none;" onchange="uploadBackup(event)" accept=".json">
     </div>
   </div>
@@ -120,11 +120,11 @@
         <div class="grid-2" style="margin-bottom: 0;">
           <div>
             <label style="color: #3730a3;">Author / Student Name</label>
-            <input type="text" id="studentName">
+            <input type="text" id="studentName" placeholder="Enter your name...">
           </div>
           <div>
             <label style="color: #3730a3;">Story Title</label>
-            <input type="text" id="storyTitle">
+            <input type="text" id="storyTitle" placeholder="Enter your story title...">
           </div>
         </div>
       </div>
@@ -132,25 +132,25 @@
       <div class="grid-2">
         <div class="card blue">
           <label>Protagonist (Hero)</label>
-          <input type="text" id="planHero">
-          <input type="text" id="planHeroTrait">
+          <input type="text" id="planHero" placeholder="Hero's name...">
+          <input type="text" id="planHeroTrait" placeholder="Key personality traits or powers...">
         </div>
         <div class="card teal">
           <label>Companion / Sidekick</label>
-          <input type="text" id="planAlly">
-          <input type="text" id="planAllyRole">
+          <input type="text" id="planAlly" placeholder="Companion's name...">
+          <input type="text" id="planAllyRole" placeholder="Their helpful skills or gadgets...">
         </div>
       </div>
 
       <div class="grid-2">
         <div class="card red">
           <label>Antagonist (Rival)</label>
-          <input type="text" id="planRival">
-          <input type="text" id="planRivalMotive">
+          <input type="text" id="planRival" placeholder="Rival / Villain name...">
+          <input type="text" id="planRivalMotive" placeholder="What do they want or plan to do?">
         </div>
         <div class="card amber">
           <label>Background Characters / World</label>
-          <input type="text" id="planExtras">
+          <input type="text" id="planExtras" placeholder="Citizens, villagers, guards, animals...">
         </div>
       </div>
 
@@ -159,25 +159,25 @@
         <div class="grid-3">
           <div>
             <label style="font-size: 10px;">Time</label>
-            <input type="text" id="planTime">
+            <input type="text" id="planTime" placeholder="e.g., Midnight, 2050...">
           </div>
           <div>
             <label style="font-size: 10px;">Place</label>
-            <input type="text" id="planPlace">
+            <input type="text" id="planPlace" placeholder="e.g., Power Station, Jungle...">
           </div>
           <div>
             <label style="font-size: 10px;">Environment</label>
-            <input type="text" id="planEnv">
+            <input type="text" id="planEnv" placeholder="e.g., Heavy rain, foggy...">
           </div>
         </div>
       </div>
 
       <div class="card amber">
         <label>4-Beat Plot Map Outline</label>
-        <input type="text" id="planBeat1">
-        <input type="text" id="planBeat2">
-        <input type="text" id="planBeat3">
-        <input type="text" id="planBeat4">
+        <input type="text" id="planBeat1" placeholder="Beat 1: How does the team arrive at the scene?">
+        <input type="text" id="planBeat2" placeholder="Beat 2: What trap, danger, or surprise strikes?">
+        <input type="text" id="planBeat3" placeholder="Beat 3: How do they work together during the showdown?">
+        <input type="text" id="planBeat4" placeholder="Beat 4: What is the peaceful outcome after victory?">
       </div>
 
       <button class="btn-next" onclick="showStage(1)">Move to Stage 2: Paint the Setting &rarr;</button>
@@ -196,21 +196,21 @@
         <span class="badge green">TRY A SIMILE: "like a..." or "as... as a..."</span>
         <span class="badge orange">TRY PERSONIFICATION: Give weather human actions</span>
         <div class="chunk-tip">Describe what your characters <strong>see, hear, and feel</strong>. Try describing the location or weather using a simile or personification.</div>
-        <textarea id="p1a" rows="3"></textarea>
+        <textarea id="p1a" rows="3" placeholder="Type Chunk A here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk B: Show Your Team Interacting (with Dialogue)</div>
         <span class="badge">TOOL: Dialogue ("...") + Character Actions</span>
         <div class="chunk-tip">Show your hero and companion working together. Describe their movements and give them spoken dialogue.</div>
-        <textarea id="p1b" rows="3"></textarea>
+        <textarea id="p1b" rows="3" placeholder="Type Chunk B here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk C: Show the Reaction of Other Characters</div>
         <span class="badge">TOOL: Show, Don't Tell</span>
         <div class="chunk-tip">Show how nearby background characters (villagers, guards, animals) react to the scene.</div>
-        <textarea id="p1c" rows="3"></textarea>
+        <textarea id="p1c" rows="3" placeholder="Type Chunk C here..."></textarea>
       </div>
 
       <button class="btn-next" onclick="showStage(2)">Move to Stage 3: Build the Danger &rarr;</button>
@@ -228,21 +228,21 @@
         <div class="chunk-label">Chunk A: The Warning Sign (Build Suspense)</div>
         <span class="badge green">TRY ONOMATOPOEIA: CRACK!, RUMBLE!, SNAP!</span>
         <div class="chunk-tip">Describe something changing before the danger appears. Is it a strange noise, lights flickering, or a sudden cold wind?</div>
-        <textarea id="p2a" rows="3"></textarea>
+        <textarea id="p2a" rows="3" placeholder="Type Chunk A here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk B: The Trap or Threat Hits</div>
         <span class="badge">TOOL: Compound Sentence (, but / , so)</span>
         <div class="chunk-tip">How does the villain strike, or how does the trap slam shut? Show how your team is caught off guard.</div>
-        <textarea id="p2b" rows="3"></textarea>
+        <textarea id="p2b" rows="3" placeholder="Type Chunk B here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk C: Body Language (Show Fear)</div>
         <span class="badge orange">TRY A METAPHOR: "His heart was a pounding drum..."</span>
         <div class="chunk-tip">Show how scared your hero is without using the word 'scared'. What happens to their heart, breath, or hands?</div>
-        <textarea id="p2c" rows="3"></textarea>
+        <textarea id="p2c" rows="3" placeholder="Type Chunk C here..."></textarea>
       </div>
 
       <button class="btn-next" onclick="showStage(3)">Move to Stage 4: Write the Showdown &rarr;</button>
@@ -260,21 +260,21 @@
         <div class="chunk-label">Chunk A: The Verbal Standoff & Dialogue</div>
         <span class="badge">TOOL: Powerful Dialogue & Tagged Speech</span>
         <div class="chunk-tip">Write spoken dialogue exchanged between the hero and antagonist before the action strikes.</div>
-        <textarea id="p3a" rows="3"></textarea>
+        <textarea id="p3a" rows="3" placeholder="Type Chunk A here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk B: Describe the High-Energy Action</div>
         <span class="badge green">TRY HYPERBOLE: Exaggerate the power or scale</span>
         <div class="chunk-tip">Describe micro-actions in dramatic detail. Use strong action verbs and hyperbole to emphasize power.</div>
-        <textarea id="p3b" rows="3"></textarea>
+        <textarea id="p3b" rows="3" placeholder="Type Chunk B here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk C: Show the Teamwork Turning Point</div>
         <span class="badge orange">TRY A SIMILE: Describe the turning moment using a comparison</span>
         <div class="chunk-tip">How do the hero and companion combine their skills to turn the tide and defeat the challenge?</div>
-        <textarea id="p3c" rows="3"></textarea>
+        <textarea id="p3c" rows="3" placeholder="Type Chunk C here..."></textarea>
       </div>
 
       <button class="btn-next" onclick="showStage(4)">Move to Stage 5: Right After Victory &rarr;</button>
@@ -292,21 +292,21 @@
         <div class="chunk-label">Chunk A: The Scene Changes from Scary to Safe</div>
         <span class="badge green">TRY A METAPHOR: "The sky became a..."</span>
         <div class="chunk-tip">Describe how the weather, sky, or room changes right after the villain is defeated. Use warm, peaceful words.</div>
-        <textarea id="p4a" rows="3"></textarea>
+        <textarea id="p4a" rows="3" placeholder="Type Chunk A here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk B: The Characters Celebrate Together</div>
         <span class="badge">TOOL: Group Dialogue & Relief Actions</span>
         <div class="chunk-tip">Show the hero, companion, and background characters sharing a sigh of relief, high-fiving, or speaking to each other.</div>
-        <textarea id="p4b" rows="3"></textarea>
+        <textarea id="p4b" rows="3" placeholder="Type Chunk B here..."></textarea>
       </div>
 
       <div class="chunk-card">
         <div class="chunk-label">Chunk C: Write a Reflective Closing Sentence</div>
         <span class="badge orange">TOOL: Complex Sentence (Although...)</span>
         <div class="chunk-tip">How has your hero grown or changed? End with a strong final thought about their future.</div>
-        <textarea id="p4c" rows="3"></textarea>
+        <textarea id="p4c" rows="3" placeholder="Type Chunk C here..."></textarea>
       </div>
 
       <button class="btn-next" onclick="showStage(5)">Move to Stage 6: Publish Storybook &rarr;</button>
@@ -330,39 +330,7 @@
   </div>
 
   <script>
-    // Default Exemplar Data
-    const EXEMPLAR_DATA = {
-      studentName: "Alex Rivera",
-      storyTitle: "The Battle for Metro City",
-      planHero: "Leo (Lightning Lad)",
-      planHeroTrait: "Brave, fast, can control electrical blasts",
-      planAlly: "Kira (Tech Girl)",
-      planAllyRole: "Smart gadget expert with a flying drone",
-      planRival: "Dr. Dread",
-      planRivalMotive: "Wants to shut down the city's power grid to rule Metro City",
-      planExtras: "Scared citizens and police officers watching from the street",
-      planTime: "Stormy midnight",
-      planPlace: "Rooftop of Metro City Power Station",
-      planEnv: "Heavy rain, flashing neon signs, dark shadows",
-      planBeat1: "Leo and Kira arrive at the stormy rooftop to protect the city power core.",
-      planBeat2: "Dr. Dread traps them with a laser cage and activates his giant drain machine.",
-      planBeat3: "Leo distracts Dr. Dread while Kira uses her drone to hack and disable the machine.",
-      planBeat4: "The power returns, the city lights turn back on, and the heroes are celebrated.",
-      p1a: "Heavy rain poured down like a waterfall across the rooftop of the Metro City Power Station. Lightning split the dark sky, lighting up the giant neon signs of the sleeping city below. The freezing wind howled through the steel towers as blue energy hummed beneath their feet.",
-      p1b: "\"We have to protect the main generator!\" Leo shouted over the thunder, adjusting his glowing yellow mask. Kira tapped her wrist tablet and launched her mini-drone into the air, replying, \"My scanner says he's already on the upper tower!\"",
-      p1c: "Down on the street, police officers flashed their red and blue car lights, while worried citizens gathered under umbrellas, pointing up at the rooftop in fear.",
-      p2a: "BZZZZT! The bright streetlights below flickered violently and suddenly went completely dark. A shadowy figure stepped out from behind the central generator as a cold wind swept across the roof.",
-      p2b: "Dr. Dread laughed wickedly as he pulled a heavy lever, so a cage of glowing red laser beams instantly slammed down around Leo and Kira.",
-      p2c: "Leo’s breath caught in his throat, and his heart was a racing engine in his chest as he stared at the dangerous red energy surrounding them.",
-      p3a: "\"You're too late, heroes! Once I drain this generator, Metro City will belong to me!\" Dr. Dread boasted. Leo raised his glowing fists and shouted, \"Not while we're still standing!\"",
-      p3b: "Dr. Dread fired a blast of dark plasma that felt powerful enough to shake the entire city, smashing heavy steel crates into tiny fragments across the roof.",
-      p3c: "Leo shot a blinding lightning bolt to distract the villain, while Kira’s drone zoomed in like a hawk and zapped the laser cage's power chip to free them.",
-      p4a: "The dark storm clouds rolled away, and thousands of golden city lights flickered back on as warm electricity filled the streets once again.",
-      p4b: "Kira high-fived Leo and cheered, \"Great timing with that blast!\" Down on the streets below, the crowd burst into wild applause as police cars turned their sirens to celebration mode.",
-      p4c: "Although Dr. Dread was powerful, Leo knew that Metro City would always be safe as long as they worked together as a team."
-    };
-
-    const SAVE_KEY = 'story_architect_saved_data';
+    const SAVE_KEY = 'story_architect_blank_template_save';
 
     // 1. Auto-Save Logic
     function autoSave() {
@@ -385,16 +353,23 @@
       autoSave();
     }
 
-    // 2. Load Data from Storage or Exemplar
+    // 2. Load Data from Local Storage (if student previously started)
     function loadData() {
       const saved = localStorage.getItem(SAVE_KEY);
-      const dataToLoad = saved ? JSON.parse(saved) : EXEMPLAR_DATA;
-
-      Object.keys(dataToLoad).forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.value = dataToLoad[id];
-      });
-
+      if (saved) {
+        try {
+          const dataToLoad = JSON.parse(saved);
+          Object.keys(dataToLoad).forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.value = dataToLoad[id];
+          });
+          const indicator = document.getElementById('saveIndicator');
+          indicator.innerHTML = '✓ Restored saved draft';
+          indicator.style.color = '#4ade80';
+        } catch (e) {
+          console.error("Could not parse saved data", e);
+        }
+      }
       updateBanners();
     }
 
@@ -414,14 +389,14 @@
     }
 
     function updateBanners() {
-      const hero = document.getElementById('planHero').value || 'Hero';
-      const ally = document.getElementById('planAlly').value || 'Companion';
-      const place = document.getElementById('planPlace').value || 'Place';
+      const hero = document.getElementById('planHero').value.trim() || 'Hero';
+      const ally = document.getElementById('planAlly').value.trim() || 'Companion';
+      const place = document.getElementById('planPlace').value.trim() || 'Place';
       
-      const b1 = document.getElementById('planBeat1').value || 'Not outlined yet';
-      const b2 = document.getElementById('planBeat2').value || 'Not outlined yet';
-      const b3 = document.getElementById('planBeat3').value || 'Not outlined yet';
-      const b4 = document.getElementById('planBeat4').value || 'Not outlined yet';
+      const b1 = document.getElementById('planBeat1').value.trim() || 'Not outlined yet';
+      const b2 = document.getElementById('planBeat2').value.trim() || 'Not outlined yet';
+      const b3 = document.getElementById('planBeat3').value.trim() || 'Not outlined yet';
+      const b4 = document.getElementById('planBeat4').value.trim() || 'Not outlined yet';
 
       document.getElementById('banner1').innerHTML = `<strong>Planning Note:</strong> Focus on <em>${hero}</em> and <em>${ally}</em> in <em>${place}</em>. Outline: ${b1}`;
       document.getElementById('banner2').innerHTML = `<strong>Planning Note:</strong> Danger outline: ${b2}`;
@@ -523,7 +498,7 @@
       autoSave();
       const data = localStorage.getItem(SAVE_KEY);
       const student = document.getElementById('studentName').value.trim() || 'student';
-      const blob = new Blob([data], { type: 'application/json' });
+      const blob = new Blob([data || '{}'], { type: 'application/json' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
       a.download = `story_backup_${student.toLowerCase().replace(/\s+/g, '_')}.json`;
@@ -549,7 +524,7 @@
     }
 
     function clearAllData() {
-      if (confirm("Are you sure you want to reset? This will clear your current story text or reload the default example.")) {
+      if (confirm("Are you sure you want to clear all text? This will erase all your typed work on this computer.")) {
         localStorage.removeItem(SAVE_KEY);
         document.querySelectorAll('input, textarea').forEach(el => el.value = '');
         updateBanners();
