@@ -11,12 +11,14 @@
     header { background-color: #1e1b4b; color: white; padding: 16px; text-align: center; position: relative; }
     header h1 { margin: 0; font-size: 20px; letter-spacing: 1px; }
 
-    /* Top Utility Bar for Saving & Controls */
+    /* Utility Bar */
     .save-bar { background-color: #0f172a; color: white; padding: 8px 16px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #334155; }
     .save-status { color: #94a3b8; font-weight: bold; display: flex; align-items: center; gap: 6px; }
     .save-tools { display: flex; gap: 8px; align-items: center; }
     .btn-tool { background: #334155; color: #f8fafc; border: 1px solid #475569; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; }
     .btn-tool:hover { background: #475569; }
+    .btn-exemplar { background: #0d9488; border-color: #0f766e; }
+    .btn-exemplar:hover { background: #14b8a6; }
     .btn-danger { background: #991b1b; border-color: #7f1d1d; }
     .btn-danger:hover { background: #dc2626; }
     
@@ -25,7 +27,7 @@
     .nav-btn { flex: 1; min-width: 130px; padding: 12px 8px; border: none; background: none; font-weight: bold; color: #64748b; border-bottom: 4px solid transparent; cursor: pointer; text-align: center; font-size: 13px; }
     .nav-btn.active { color: #4338ca; border-bottom-color: #4338ca; background-color: #eef2ff; }
 
-    /* Main Container & Panels */
+    /* Panels */
     .container { max-width: 850px; margin: 24px auto; padding: 0 16px; }
     .panel { background: white; padding: 24px; border-radius: 8px; border: 1px solid #cbd5e1; display: none; }
     .panel.active { display: block; }
@@ -33,7 +35,6 @@
     h2 { margin-top: 0; color: #1e293b; font-size: 18px; }
     p.sub { font-size: 14px; color: #475569; margin-bottom: 20px; background-color: #f1f5f9; padding: 10px 14px; border-radius: 6px; border-left: 4px solid #4338ca; }
 
-    /* Layout Cards & Inputs */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
     .card { padding: 16px; border-radius: 6px; border-left: 4px solid; margin-bottom: 16px; }
@@ -46,28 +47,25 @@
     
     label { display: block; font-weight: bold; font-size: 12px; margin-bottom: 6px; text-transform: uppercase; color: #334155; }
     input, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 4px; margin-bottom: 10px; font-size: 14px; }
+    .input-title { font-weight: bold; color: #1e1b4b; background-color: #f8fafc; border: 1px solid #cbd5e1; margin-bottom: 12px; }
     textarea { resize: vertical; }
 
-    /* Planning Banner */
     .plan-banner { background-color: #f8fafc; border: 1px solid #cbd5e1; padding: 12px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; color: #334155; }
     .plan-banner strong { color: #4338ca; }
 
-    /* Micro-Scaffolding Cards */
     .chunk-card { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 14px; border-radius: 6px; margin-bottom: 16px; }
     .chunk-label { font-weight: bold; font-size: 14px; color: #1e293b; margin-bottom: 4px; }
     .chunk-tip { font-size: 12px; color: #475569; margin-bottom: 10px; line-height: 1.4; }
 
-    /* Helper Badges */
     .badge { display: inline-block; background-color: #e0e7ff; color: #3730a3; padding: 3px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; margin-bottom: 6px; }
     .badge.green { background-color: #dcfce7; color: #166534; }
     .badge.orange { background-color: #ffedd5; color: #9a3412; }
 
-    /* Action Buttons */
     .btn-next { background-color: #4338ca; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; float: right; }
     .btn-export { background-color: #2563eb; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-right: 10px; }
     .btn-print { background-color: #059669; color: white; border: none; padding: 10px 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
 
-    /* Multi-Page Printable Storybook */
+    /* Printable Book Pages */
     .book-page { background: white; border: 2px solid #0f172a; padding: 32px; height: 950px; margin-bottom: 32px; display: flex; flex-direction: column; justify-content: space-between; page-break-after: always; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
     .draw-zone { height: 380px; width: 100%; border: 1.5px solid #000000; background-color: transparent; margin-bottom: 24px; }
     .text-zone { flex-grow: 1; font-family: Georgia, serif; line-height: 1.5; font-size: 14px; color: #1e293b; }
@@ -92,10 +90,13 @@
   <div class="save-bar">
     <div class="save-status" id="saveIndicator">● Ready (Type to start auto-saving)</div>
     <div class="save-tools">
+      <button class="btn-tool btn-exemplar" onclick="loadExemplar()">Load Exemplar Story</button>
       <button class="btn-tool" onclick="downloadBackup()">Download Backup</button>
-      <button class="btn-tool" onclick="document.getElementById('fileInput').click()">Load Backup</button>
+      <button class="btn-tool" onclick="triggerFileUpload()">Load Backup</button>
       <button class="btn-tool btn-danger" onclick="clearAllData()">Clear All Text</button>
-      <input type="file" id="fileInput" style="display:none;" onchange="uploadBackup(event)" accept=".json">
+      
+      <!-- Chromebook Compatible File Selector -->
+      <input type="file" id="fileInput" style="display:none;" onchange="uploadBackup(event)" accept=".json, application/json, text/plain">
     </div>
   </div>
 
@@ -172,7 +173,7 @@
         </div>
       </div>
 
-      <!-- REVISED CLEAR 4-BEAT PLOT MAP -->
+      <!-- 4-BEAT PLOT MAP -->
       <div class="card amber">
         <label>4-Beat Plot Map (Story Outline Summary)</label>
         <p style="font-size: 12px; color: #475569; margin-top: -2px; margin-bottom: 10px;">Write one quick sentence for each key event in your story:</p>
@@ -199,6 +200,10 @@
       <h2>Stage 2: Paint the Setting & Introduce Your Team</h2>
       <p class="sub"><strong>Goal for this part:</strong> Create a vivid picture of the location and introduce your hero and companion working together. Use a <strong>Simile</strong> or <strong>Personification</strong> to make the environment come alive!</p>
       
+      <!-- EDITABLE CHAPTER TITLE -->
+      <label style="color: #4338ca;">Chapter 1 Title (You can change this!)</label>
+      <input type="text" class="input-title" id="ch1Title" value="CHAPTER 1: THE SETTING & COMPANIONS">
+
       <div class="plan-banner" id="banner1"></div>
 
       <div class="chunk-card">
@@ -232,6 +237,10 @@
       <h2>Stage 3: Build the Danger & Trigger the Trap</h2>
       <p class="sub"><strong>Goal for this part:</strong> Build suspense before the big problem hits! Use <strong>Onomatopoeia (sound words)</strong> and show how your hero's body reacts to fear.</p>
       
+      <!-- EDITABLE CHAPTER TITLE -->
+      <label style="color: #4338ca;">Chapter 2 Title (You can change this!)</label>
+      <input type="text" class="input-title" id="ch2Title" value="CHAPTER 2: BUILDING THE DANGER">
+
       <div class="plan-banner" id="banner2"></div>
 
       <div class="chunk-card">
@@ -264,6 +273,10 @@
       <h2>Stage 4: Write the Final Showdown & Action Climax</h2>
       <p class="sub"><strong>Goal for this part:</strong> Write an intense fight or standoff between your hero, companion, and rival. Use <strong>Hyperbole (exaggeration)</strong> and vivid action verbs to power the scene!</p>
 
+      <!-- EDITABLE CHAPTER TITLE -->
+      <label style="color: #4338ca;">Chapter 3 Title (You can change this!)</label>
+      <input type="text" class="input-title" id="ch3Title" value="CHAPTER 3: THE SHOWDOWN">
+
       <div class="plan-banner" id="banner3"></div>
 
       <div class="chunk-card">
@@ -295,6 +308,10 @@
     <div class="panel" id="stage4">
       <h2>Stage 5: Show What Happens Right After the Victory</h2>
       <p class="sub"><strong>Goal for this part:</strong> Describe the quiet moment after the battle, show how the scenery turns from scary to safe, and bring your characters together to celebrate!</p>
+
+      <!-- EDITABLE CHAPTER TITLE -->
+      <label style="color: #4338ca;">Chapter 4 Title (You can change this!)</label>
+      <input type="text" class="input-title" id="ch4Title" value="CHAPTER 4: RIGHT AFTER VICTORY">
 
       <div class="plan-banner" id="banner4"></div>
 
@@ -342,7 +359,55 @@
   <script>
     const SAVE_KEY = 'story_architect_blank_template_save';
 
-    // 1. Auto-Save Logic
+    const exemplarData = {
+      studentName: "Alex Rivers",
+      storyTitle: "The Clockwork Heart of Iron City",
+      ch1Title: "CHAPTER 1: THE SHADOWED POWER GRID",
+      ch2Title: "CHAPTER 2: TRAPPED IN THE DARK",
+      ch3Title: "CHAPTER 3: THE CLOCKWORK STANDOFF",
+      ch4Title: "CHAPTER 4: A NEW GOLDEN DAWN",
+      planHero: "Leo Vane",
+      planHeroTrait: "Quick-thinking, resourceful, uses a brass wrench tool.",
+      planAlly: "Maya Spark",
+      planAllyRole: "Tech genius, carries a light-emitting gadget.",
+      planRival: "Commander Steel",
+      planRivalMotive: "Wants to drain power from the city generator to supercharge his robot army.",
+      planExtras: "Panicking factory workers, frightened citizens, mechanical drone guards.",
+      planTime: "Midnight",
+      planPlace: "The Old Power Grid Factory",
+      planEnv: "Heavy rain, flickering steam pipes, pitch-black shadow.",
+      planBeat1: "Leo and Maya arrive at the ancient power grid to restore the city's glowing energy core.",
+      planBeat2: "Commander Steel locks the iron gates and releases his mechanical drone guards.",
+      planBeat3: "Maya hacks the drone controls while Leo uses his wrench to jam the main gear wheel.",
+      planBeat4: "The power core reignites, turning the city lights back on as Commander Steel retreats.",
+      p1a: "Rain lashed against the cracked glass windows like a swarm of angry bees. Deep inside the Old Power Grid, the ancient machinery groaned in the shadows as if the building itself were groaning in pain. Thick steam hissed out of rusty copper pipes, filling the damp air with the metallic scent of oil and old copper.",
+      p1b: "Leo adjusted his heavy leather goggles and gripped his brass wrench tightly. \"Hold the flashlight steady, Maya,\" he whispered, crouching near the giant humming generator.\n\nMaya unclipped her glowing blue light gadget and aimed it toward the gear shaft. \"We only have five minutes before the main power dies completely, Leo. Move fast!\"",
+      p1c: "Down in the lower alleyway, frightened factory workers huddled beneath canvas awnings, staring up at the darkening tower with wide, anxious eyes as the last safety lights began to flicker and die.",
+      p2a: "Suddenly, CLANG! A heavy steel blast door slammed shut behind them, sealing the exit in absolute darkness. The ambient hum of the generator cut out, replaced by a eerie, low whistling sound that vibrated through the metal floorboards.",
+      p2b: "Red emergency lights flashed across the walls, and the shadowy figure of Commander Steel stepped onto the high balcony above. He pulled a heavy lever to lock down the system, so the iron gates snapped shut with a deafening metallic screech.",
+      p2c: "Leo’s heart was a trapped bird fluttering wildly against his ribs. Cold sweat beaded across his forehead, and his throat went completely dry as two mechanical drone guards descended from the ceiling, their red eye-cameras scanning the room.",
+      p3a: "\"You're too late, children!\" Commander Steel boomed, his voice echoing through the hollow chamber. \"This power core belongs to my army now!\"\n\nLeo stepped in front of Maya, raising his brass wrench. \"Not while we're still breathing, Steel!\"",
+      p3b: "A drone charged forward with a deafening roar that shook the entire building to its very foundations. Leo dodged sideways in a blur of lightning speed, diving behind a steam pipe just as red laser sparks scorched the stone floor behind him.",
+      p3c: "\"Now, Maya!\" Leo shouted. Maya slid across the wet floor like an ice skater, jamming her control tool directly into the drone's main circuit board. While the guard short-circuited in a shower of blue sparks, Leo leaped up and jammed his heavy wrench straight into the central gear, stopping Commander Steel’s machine dead in its tracks.",
+      p4a: "The harsh red alarm lights faded away, replaced by a warm, golden glow as the main generator surged back to life. The dark factory room became a bright palace of golden light, illuminating every corner with fresh warmth.",
+      p4b: "Outside in the streets, cheers erupted from the crowd of citizens as every streetlamp in Iron City burst back onto the grid. Maya sank against the wall with a huge sigh of relief, wiping grease off her cheek. \"We actually did it,\" she laughed, giving Leo a high-five.\n\nLeo smiled, tossing his trusty wrench into his kit. \"We make a pretty good team.\"",
+      p4c: "Although the danger had passed for tonight, Leo knew he was no longer just an ordinary apprentice—he was a true protector of Iron City."
+    };
+
+    function loadExemplar() {
+      if (confirm("Load exemplar story? This will replace any text currently typed on screen.")) {
+        Object.keys(exemplarData).forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.value = exemplarData[id];
+        });
+        autoSave();
+        updateBanners();
+        showStage(0);
+        alert("Exemplar story loaded successfully!");
+      }
+    }
+
+    // Auto-Save Logic
     function autoSave() {
       const data = {};
       document.querySelectorAll('input, textarea').forEach(el => {
@@ -355,7 +420,6 @@
       indicator.style.color = '#4ade80';
     }
 
-    // Indicate typing in progress
     function notifyTyping() {
       const indicator = document.getElementById('saveIndicator');
       indicator.innerHTML = '● Saving...';
@@ -363,7 +427,6 @@
       autoSave();
     }
 
-    // 2. Load Data from Local Storage (if student previously started)
     function loadData() {
       const saved = localStorage.getItem(SAVE_KEY);
       if (saved) {
@@ -383,7 +446,6 @@
       updateBanners();
     }
 
-    // 3. Navigation between Stages
     function showStage(stageNum) {
       document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
       document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -421,10 +483,10 @@
       container.innerHTML = '';
 
       const chapters = [
-        { title: 'CHAPTER 1: THE SETTING & COMPANIONS', text: getChapterText('p1a', 'p1b', 'p1c') },
-        { title: 'CHAPTER 2: BUILDING THE DANGER', text: getChapterText('p2a', 'p2b', 'p2c') },
-        { title: 'CHAPTER 3: THE SHOWDOWN', text: getChapterText('p3a', 'p3b', 'p3c') },
-        { title: 'CHAPTER 4: RIGHT AFTER VICTORY', text: getChapterText('p4a', 'p4b', 'p4c') }
+        { title: document.getElementById('ch1Title').value.trim() || 'CHAPTER 1', text: getChapterText('p1a', 'p1b', 'p1c') },
+        { title: document.getElementById('ch2Title').value.trim() || 'CHAPTER 2', text: getChapterText('p2a', 'p2b', 'p2c') },
+        { title: document.getElementById('ch3Title').value.trim() || 'CHAPTER 3', text: getChapterText('p3a', 'p3b', 'p3c') },
+        { title: document.getElementById('ch4Title').value.trim() || 'CHAPTER 4', text: getChapterText('p4a', 'p4b', 'p4c') }
       ];
 
       chapters.forEach((ch, idx) => {
@@ -433,7 +495,7 @@
         page.innerHTML = `
           <div class="draw-zone"></div>
           <div class="text-zone">
-            <h3 style="margin-top:0; border-bottom: 2px solid #0f172a; padding-bottom: 6px; color: #1e1b4b; font-size: 16px; margin-bottom: 12px;">${ch.title}</h3>
+            <h3 style="margin-top:0; border-bottom: 2px solid #0f172a; padding-bottom: 6px; color: #1e1b4b; font-size: 16px; margin-bottom: 12px; text-transform: uppercase;">${ch.title}</h3>
             <p style="white-space: pre-line; margin: 0;">${ch.text || '<em>[This chapter has not been written yet.]</em>'}</p>
           </div>
           <div class="page-number">"${title}" by ${student} &bull; Page ${idx + 1}</div>
@@ -454,10 +516,10 @@
       const title = document.getElementById('storyTitle').value.trim() || 'Story';
 
       const chapters = [
-        { title: 'CHAPTER 1: THE SETTING & COMPANIONS', text: getChapterText('p1a', 'p1b', 'p1c') },
-        { title: 'CHAPTER 2: BUILDING THE DANGER', text: getChapterText('p2a', 'p2b', 'p2c') },
-        { title: 'CHAPTER 3: THE SHOWDOWN', text: getChapterText('p3a', 'p3b', 'p3c') },
-        { title: 'CHAPTER 4: RIGHT AFTER VICTORY', text: getChapterText('p4a', 'p4b', 'p4c') }
+        { title: document.getElementById('ch1Title').value.trim() || 'CHAPTER 1', text: getChapterText('p1a', 'p1b', 'p1c') },
+        { title: document.getElementById('ch2Title').value.trim() || 'CHAPTER 2', text: getChapterText('p2a', 'p2b', 'p2c') },
+        { title: document.getElementById('ch3Title').value.trim() || 'CHAPTER 3', text: getChapterText('p3a', 'p3b', 'p3c') },
+        { title: document.getElementById('ch4Title').value.trim() || 'CHAPTER 4', text: getChapterText('p4a', 'p4b', 'p4c') }
       ];
 
       let formattedHtml = `
@@ -481,7 +543,7 @@
               </tr>
             </table>
             
-            <h2 style="color: #4338ca; border-bottom: 2px solid #4338ca; padding-bottom: 4pt; font-size: 14pt; margin-top: 20pt; margin-bottom: 12pt; page-break-after: avoid;">${ch.title}</h2>
+            <h2 style="color: #4338ca; border-bottom: 2px solid #4338ca; padding-bottom: 4pt; font-size: 14pt; margin-top: 20pt; margin-bottom: 12pt; page-break-after: avoid; text-transform: uppercase;">${ch.title}</h2>
             <div style="font-family: Georgia, serif; white-space: pre-line; line-height: 1.5; font-size: 11pt; margin-bottom: 16pt;">${ch.text || '[ This chapter was left blank ]'}</div>
             <div style="text-align: right; font-size: 9pt; color: #94a3b8; border-top: 1px solid #cbd5e1; padding-top: 6pt; margin-top: 24pt;">"${title}" by ${student} • Page ${idx + 1}</div>
           </div>
@@ -503,7 +565,7 @@
       window.open('https://docs.new', '_blank');
     }
 
-    // Backup Functions
+    // Backup Functions (Chromebook Optimized)
     function downloadBackup() {
       autoSave();
       const data = localStorage.getItem(SAVE_KEY);
@@ -513,6 +575,12 @@
       a.href = URL.createObjectURL(blob);
       a.download = `story_backup_${student.toLowerCase().replace(/\s+/g, '_')}.json`;
       a.click();
+    }
+
+    function triggerFileUpload() {
+      const fileInput = document.getElementById('fileInput');
+      fileInput.value = ''; // Reset input to ensure change event fires
+      fileInput.click();
     }
 
     function uploadBackup(e) {
@@ -527,7 +595,7 @@
           loadData();
           alert('Backup restored successfully!');
         } catch (err) {
-          alert('Invalid backup file.');
+          alert('Could not read file. Please ensure you selected a valid story backup file.');
         }
       };
       reader.readAsText(file);
@@ -547,7 +615,6 @@
     window.addEventListener('DOMContentLoaded', () => {
       loadData();
       
-      // Save continuously as the student types
       document.querySelectorAll('input, textarea').forEach(el => {
         el.addEventListener('input', notifyTyping);
       });
