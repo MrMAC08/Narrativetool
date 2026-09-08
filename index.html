@@ -144,9 +144,9 @@
 
       <div class="grid-2">
         <div class="card red">
-          <label>Antagonist (Rival)</label>
+          <label>Antagonist (Rival / Villain)</label>
           <input type="text" id="planRival" placeholder="Rival / Villain name...">
-          <input type="text" id="planRivalMotive" placeholder="What do they want or plan to do?">
+          <input type="text" id="planRivalMotive" placeholder="What bad thing do they want to do?">
         </div>
         <div class="card amber">
           <label>Background Characters / World</label>
@@ -159,25 +159,35 @@
         <div class="grid-3">
           <div>
             <label style="font-size: 10px;">Time</label>
-            <input type="text" id="planTime" placeholder="e.g., Midnight, 2050...">
+            <input type="text" id="planTime" placeholder="e.g., Midnight, Future 2050...">
           </div>
           <div>
             <label style="font-size: 10px;">Place</label>
-            <input type="text" id="planPlace" placeholder="e.g., Power Station, Jungle...">
+            <input type="text" id="planPlace" placeholder="e.g., Abandoned Factory, Jungle...">
           </div>
           <div>
             <label style="font-size: 10px;">Environment</label>
-            <input type="text" id="planEnv" placeholder="e.g., Heavy rain, foggy...">
+            <input type="text" id="planEnv" placeholder="e.g., Heavy rain, dark and foggy...">
           </div>
         </div>
       </div>
 
+      <!-- REVISED CLEAR 4-BEAT PLOT MAP -->
       <div class="card amber">
-        <label>4-Beat Plot Map Outline</label>
-        <input type="text" id="planBeat1" placeholder="Beat 1: How does the team arrive at the scene?">
-        <input type="text" id="planBeat2" placeholder="Beat 2: What trap, danger, or surprise strikes?">
-        <input type="text" id="planBeat3" placeholder="Beat 3: How do they work together during the showdown?">
-        <input type="text" id="planBeat4" placeholder="Beat 4: What is the peaceful outcome after victory?">
+        <label>4-Beat Plot Map (Story Outline Summary)</label>
+        <p style="font-size: 12px; color: #475569; margin-top: -2px; margin-bottom: 10px;">Write one quick sentence for each key event in your story:</p>
+        
+        <label style="font-size: 11px; color: #d97706;">Beat 1: Arrival & Starting Task</label>
+        <input type="text" id="planBeat1" placeholder="e.g., Alex and Mia arrive at the old power grid to fix the lights.">
+        
+        <label style="font-size: 11px; color: #d97706;">Beat 2: The Sudden Danger or Trap</label>
+        <input type="text" id="planBeat2" placeholder="e.g., Lord Shadow locks the exit doors and releases mechanical guards.">
+        
+        <label style="font-size: 11px; color: #d97706;">Beat 3: The Showdown & Teamwork</label>
+        <input type="text" id="planBeat3" placeholder="e.g., Mia hacks the security panel while Alex distracts the robot commander.">
+        
+        <label style="font-size: 11px; color: #d97706;">Beat 4: Victory & Safe Outcome</label>
+        <input type="text" id="planBeat4" placeholder="e.g., The lights turn back on, the robots shut down, and the city is saved.">
       </div>
 
       <button class="btn-next" onclick="showStage(1)">Move to Stage 2: Paint the Setting &rarr;</button>
